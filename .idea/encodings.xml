@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" addBOMForNewFiles="with BOM">
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/controller/SysCarController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/controller/SysPasswordFindController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/controller/SysRegisterController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/controller/SysSmsCodeController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/controller/SysUserController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/domain/entity/SmsRegister.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/domain/entity/SmsRepair.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/domain/entity/SysCar.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/domain/entity/SysPasswordFind.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/domain/entity/SysRegister.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/domain/entity/SysSmsCode.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/domain/entity/SysUserInfo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/domain/entity/SysUserInfoData.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/domain/entity/SysUserRoom.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/mapper/SysCarMapper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/mapper/SysUserInfoMapper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/service/SysCarService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/service/SysPasswordFindService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/service/SysRegisterService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/service/SysUserInfoService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/java/com/rkr/utils/UploadUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tjes_backend/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

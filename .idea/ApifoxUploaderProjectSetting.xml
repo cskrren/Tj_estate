@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ApifoxUploaderProjectSetting">
+    <option name="apifoxAccessToken" value="APS-Eo9nl1mjEjhohlMdevqnF7YOLmLRxNot  " />
+    <option name="apifoxApiOverwriteMode" value="覆盖所有字段" />
+    <option name="apifoxProjectIds">
+      <array>
+        <option value="# ModuleName:ProjectID" />
+        <option value="mall-admin:2587410" />
+        <option value="mall-search:2587410" />
+        <option value="" />
+        <option value="tj_music:2587410" />
+        <option value="Tj_estate:2693458" />
+      </array>
+    </option>
+    <option name="yapiTokens" value="" />
+  </component>
+</project>
