@@ -20,20 +20,21 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for QRTZ_BLOB_TRIGGERS
 -- ----------------------------
-DROP TABLE IF EXISTS `QRTZ_BLOB_TRIGGERS`;
-CREATE TABLE `QRTZ_BLOB_TRIGGERS` (
-                                      `SCHED_NAME` varchar(120) NOT NULL,
-                                      `TRIGGER_NAME` varchar(100) NOT NULL,
-                                      `TRIGGER_GROUP` varchar(100) NOT NULL,
-                                      `BLOB_DATA` blob,
-                                      PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-                                      CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `QRTZ_TRIGGERS` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `SystemTree`;
+CREATE TABLE `SystemTree` (
+  `id` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `fatherid` varchar(100) NOT NULL,
+  `isfile` varchar(1) NOT NULL,
+  `filecontent` varchar(5000) NOT NULL,
+  PRIMARY KEY (`id`),
+) DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of QRTZ_BLOB_TRIGGERS
 -- ----------------------------
 BEGIN;
+
 COMMIT;
 
 -- ----------------------------
