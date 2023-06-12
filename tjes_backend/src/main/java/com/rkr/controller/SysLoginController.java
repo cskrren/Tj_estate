@@ -10,6 +10,8 @@ import com.rkr.service.SysLoginService;
 import com.rkr.service.SysUserService;
 import com.rkr.utils.RequestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisAccessor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -29,8 +31,6 @@ import java.awt.image.BufferedImage;
 @RestController
 @RequestMapping()
 public class SysLoginController {
-    @Autowired
-    private SysUserService sysUserService;//这里会报错，但是并不影响
     @Autowired
     private SysLoginService sysLoginService;//这里会报错，但是并不影响
 
@@ -63,9 +63,8 @@ public class SysLoginController {
      */
     @GetMapping("/logout")
     private AjaxResult logout() {
-        RequestUtils.invalidate();
+        sysLoginService.logout();
         return AjaxResult.success();
-
     }
 
     /**

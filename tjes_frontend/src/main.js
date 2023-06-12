@@ -22,6 +22,12 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
 
+import Chat from 'jwchat';
+/* 在 0.2.041 之前的版本需要引入 css */
+// import 'jwchat/lib/JwChat.css';
+Vue.use(Chat)
+
+
 import AntDesignVue from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css';
 Vue.use(AntDesignVue)

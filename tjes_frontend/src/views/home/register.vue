@@ -54,7 +54,7 @@ export default {
       password: '', 
       confirmPassword: '',
       code: '',
-      canRegister: true,
+      canRegister: true
     }
   },
   methods: {
@@ -200,7 +200,7 @@ export default {
 
 <style>
 .registration-form {
-    background-image: url("http://localhost:8082/images/5.jpg");
+    background-image: url('https://th.bing.com/th/id/R.1cd5fa3132f027689dea42a856ca0c26?rik=zVEltYscc4K1vQ&riu=http%3a%2f%2fimg.zcool.cn%2fcommunity%2f011dfb55495fca0000019ae913f1f2.jpg%401280w_1l_2o_100sh.jpg&ehk=TPyxtDcW4gUmeBTqTUTQqUU5aUeZj55bRM9bc3z6B%2fw%3d&risl=&pid=ImgRaw&r=0');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

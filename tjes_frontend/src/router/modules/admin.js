@@ -84,7 +84,7 @@ export default [
     component: Layout,
     redirect: '/guarantee-manager/repair',
     meta: {
-      title: '小区保障管理'
+      title: '生活管理'
     },
     children: [
       {
@@ -136,7 +136,7 @@ export default [
         name: 'estate_user',
         component: () => import('@/views/admin/rq/manager/user_manager.vue'),
         meta: {
-          title: '物业管理',
+          title: '账号信息管理',
         }
       },
       {
@@ -149,30 +149,4 @@ export default [
       },
     ]
   },
-  // {
-  //   path: '/authority-manager',
-  //   component: Layout,
-  //   redirect: '/authority-manager',
-  //   meta: {
-  //     title: '权限管理'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'admin',
-  //       name: 'admin',
-  //       component: () => import('@/views/admin/rq/authority/authority_admin.vue'),
-  //       meta: {
-  //         title: '管理员权限',
-  //       }
-  //     },
-  //     {
-  //       path: 'common',
-  //       name: 'common',
-  //       component: () => import('@/views/admin/rq/authority/authority_user.vue'),
-  //       meta: {
-  //         title: '普通用户权限',
-  //       }
-  //     },
-  //   ]
-  // },
 ]

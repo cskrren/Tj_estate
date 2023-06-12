@@ -18,7 +18,6 @@ let globalSettings = {
   // 版权信息配置，格式为：Copyright © [dates] <company>
   copyrightDates: '2023',
   copyrightCompany: '智能小区管理系统',
-  copyrightWebsite: 'https://hooray.gitee.io/fantastic-admin',
   // 是否开启导航搜索
   enableNavSearch: true,
   // 是否开启全屏

@@ -28,7 +28,7 @@ public class SysUserRoom {
     /**
      * 房间ID
      */
-    private String roomId;
+    private Integer roomId;
     /**
      * 创建时间
      */

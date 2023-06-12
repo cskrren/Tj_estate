@@ -5,6 +5,7 @@ import com.rkr.domain.AjaxResult;
 import com.rkr.domain.entity.SysRegister;
 import com.rkr.domain.entity.SysUser;
 import com.rkr.service.SysRegisterService;
+import com.rkr.service.SysUserInfoService;
 import com.rkr.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,9 @@ public class SysRegisterController {
     @Autowired
     private SysRegisterService sysRegisterService;
 
+    @Autowired
+    private SysUserInfoService sysUserInfoService;
+
     /**
      * 注册
      * @param sysRegister
@@ -37,6 +41,7 @@ public class SysRegisterController {
         if (user==null) {
             return AjaxResult.error("用户名已存在");
         }
+        sysUserInfoService.insertUserInfo(user);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("userName",user.getUserName());
         System.out.println(jsonObject);

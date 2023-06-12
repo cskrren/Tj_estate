@@ -126,6 +126,14 @@ export default [
           title: '聊天Bot',
         }
       },
+      {
+        path: 'chatroom',
+        name: 'chatroom',
+        component: () => import('@/views/user/chat/multichat.vue'),
+        meta: {
+          title: '聊天室',
+        }
+      }
     ]
   },
 ]

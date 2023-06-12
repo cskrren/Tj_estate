@@ -1,13 +1,14 @@
 package com.rkr.service;
 
+import com.alibaba.fastjson.JSON;
+import com.rkr.domain.constant.RedisKeyConstants;
 import com.rkr.domain.entity.SysNotice;
 import com.rkr.mapper.SysNoticeMapper;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Package com.rkr.service
@@ -25,13 +26,24 @@ public class SysNoticeService {
     @Resource
     private SysNoticeMapper sysNoticeMapper;
 
+    @Resource
+    private RedisService redisService;
+
     /**
      * 根据用户名查询用户信息
      * @param id
      * @return SysNotice
      */
     public SysNotice findById(String id) {
-        return sysNoticeMapper.selectById(id);
+        String redisKey = RedisKeyConstants.NOTICE_INFO_KEY + id;
+        if (redisService.hasKey(redisKey)) {
+            return redisService.get(redisKey, SysNotice.class);
+        }
+        SysNotice sysNotice = sysNoticeMapper.selectById(id);
+        if (sysNotice != null) {
+            redisService.set(redisKey, sysNotice);
+        }
+        return sysNotice;
     }
 
     /**
@@ -39,7 +51,19 @@ public class SysNoticeService {
      * @return List<SysNotice>
      */
     public List<SysNotice> list() {
-        return sysNoticeMapper.selectList(null);
+        String redisHashKey = RedisKeyConstants.NOTICE_LIST_KEY;
+        if(redisService.hasKey(redisHashKey)){
+            return redisService.getHash(redisHashKey, SysNotice.class);
+        }
+        List<SysNotice> sysNoticeList = sysNoticeMapper.selectList(null);
+        if (sysNoticeList != null) {
+            Map<String,String> map = new HashMap<>();
+            for (SysNotice sysNotice : sysNoticeList) {
+                map.put(sysNotice.getId(), JSON.toJSONString(sysNotice));
+            }
+            redisService.setHash(redisHashKey, map);
+        }
+        return sysNoticeList;
     }
 
     /**
@@ -47,11 +71,21 @@ public class SysNoticeService {
      * @param sysNotice
      */
     public void save(SysNotice sysNotice) {
+        String redisKey = RedisKeyConstants.NOTICE_INFO_KEY + sysNotice.getId();
+        String redisHashKey = RedisKeyConstants.NOTICE_LIST_KEY;
         if (findById(sysNotice.getId()) != null) {
+            if(redisService.hasKey(redisKey)){
+                redisService.delete(redisKey);
+            }
+            if(redisService.hasHashKey(redisHashKey, sysNotice.getId())){
+                redisService.deleteOne(redisHashKey, sysNotice.getId());
+            }
             sysNoticeMapper.updateById(sysNotice);
-            return;
+        } else{
+            sysNoticeMapper.insert(sysNotice);
         }
-        sysNoticeMapper.insert(sysNotice);
+        redisService.set(redisKey, sysNotice);
+        redisService.setOne(redisHashKey, sysNotice.getId(), sysNotice);
     }
 
     /**
@@ -60,7 +94,18 @@ public class SysNoticeService {
      * @return boolean
      */
     public boolean delete(String id) {
-        return sysNoticeMapper.deleteById(id) > 0;
+        boolean flag = sysNoticeMapper.deleteById(id) > 0;
+        if(flag){
+            String redisKey = RedisKeyConstants.NOTICE_INFO_KEY + id;
+            String redisHashKey = RedisKeyConstants.NOTICE_LIST_KEY;
+            if(redisService.hasKey(redisKey)){
+                redisService.delete(redisKey);
+            }
+            if(redisService.hasHashKey(redisHashKey, id)){
+                redisService.deleteOne(redisHashKey, id);
+            }
+        }
+        return flag;
     }
 
 

@@ -62,20 +62,6 @@ import User from './modules/user'
 
 // 当 children 不为空的主导航只有一项时，则隐藏
 let asyncRoutes = [
-  // {
-  //   meta: {
-  //     title: '默认',
-  //     icon: 'sidebar-default'
-  //   },
-  //   children: [
-  //     MultilevelMenuExample,
-  //     BreadcrumbExample,
-  //     KeepAliveExample,
-  //     ComponentBasicExample,
-  //     ComponentExample,
-  //     PermissionExample,
-  //   ]
-  // },
   {
     meta: {
       title: '管理员后台',
@@ -134,6 +120,7 @@ router.beforeEach(async (to, from, next) => {
       currentPath: to.path
     })
     accessRoutes.push(...lastRoute)
+    console.log(accessRoutes)
     accessRoutes.forEach(route => {
       router.addRoute(route)
     })
@@ -167,7 +154,10 @@ router.beforeEach(async (to, from, next) => {
       }
     }
   } else {
-    if (to.name != 'login') {
+    // 未登录状态下，如果访问的页面需要权限，则跳转到登录页
+    if(to.name == 'register' || to.name == 'passwordfind'){
+      next()
+    } else if (to.name != 'home') {
       next({
         name: 'home',
         query: {

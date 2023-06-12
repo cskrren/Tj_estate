@@ -1,11 +1,13 @@
 package com.rkr.service;
 
+import com.alibaba.fastjson.JSON;
 import com.google.code.kaptcha.Constants;
 import com.rkr.domain.entity.SysLogin;
 import com.rkr.domain.entity.SysUser;
 import com.rkr.service.security.LoginUser;
 import com.rkr.utils.RequestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @Package com.rkr.service
@@ -42,6 +43,12 @@ public class SysLoginService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private SysUserInfoService sysUserInfoService;
+
+    @Resource
+    private RedisService redisService;
+
     /**
      * 用户登录
      * @param sysLogin
@@ -59,13 +66,29 @@ public class SysLoginService {
             return null;
         }
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-//        List<String> userAcl = sysUserService.findUserAcl(loginUser.getUser().getId());
-//        loginUser.setPermissions(userAcl);
         //将登录信息存储到Session中
         setUserInfoToSession(loginUser);
+        //将用户信息存储到Redis中
+        redisService.set("user", JSON.toJSONString(loginUser.getUser()));
+        //更新用户状态
+        sysUserInfoService.updateStatus(loginUser.getUser().getId());
         //删除验证码信息
         removeLoginCode();
         return loginUser.getUser();
+    }
+
+    /**
+     * 登出
+     * @return
+     */
+    public void logout() {
+        //删除Redis中的用户信息
+        redisService.delete("user");
+        //获取用户ID
+        String userId = RequestUtils.getCurrentLoginUser().getUser().getId();
+        //更新用户状态
+        sysUserInfoService.updateStatus(userId);
+        RequestUtils.invalidate();
     }
 
     /**

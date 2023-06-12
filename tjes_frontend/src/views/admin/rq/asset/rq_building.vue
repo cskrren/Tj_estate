@@ -5,7 +5,7 @@
         <span>搜索类型</span>
         <a-select
           size="large"
-          default-value="单位名称"
+          default-value="楼宇名称"
           v-model="building_query_type"
           style="width: 200px;"
         >

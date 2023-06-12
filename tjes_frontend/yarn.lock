@@ -866,6 +866,53 @@
     "lodash" "^4.17.19"
     "to-fast-properties" "^2.0.0"
 
+"@better-scroll/core@^2.4.2", "@better-scroll/core@^2.5.1":
+  "integrity" "sha512-koKOuYA55dQ04FJRIVUpMGDr1hbCfWmfX0MGp1hKagkQSWSRpwblqACiwtggVauoj9aaJRJZ9hDsTM4weaavlg=="
+  "resolved" "https://registry.npmjs.org/@better-scroll/core/-/core-2.5.1.tgz"
+  "version" "2.5.1"
+  dependencies:
+    "@better-scroll/shared-utils" "^2.5.1"
+
+"@better-scroll/mouse-wheel@^2.4.2":
+  "integrity" "sha512-DGnrirRMY6zMM7xwgx09D/cA9A//3J1/uDkq8iBVEyE5p0sEr/keQpjEfFHGkBRa505BnbBwdbN6f5lugEDSPw=="
+  "resolved" "https://registry.npmjs.org/@better-scroll/mouse-wheel/-/mouse-wheel-2.5.1.tgz"
+  "version" "2.5.1"
+  dependencies:
+    "@better-scroll/core" "^2.5.1"
+
+"@better-scroll/observe-dom@^2.4.2":
+  "integrity" "sha512-TCMGFLRfpXBPIwtUV/efliUmfmrhSNI7NXdSyjdWjsLOS7dh3eFkmcom5ERVWMaXVELSmujGXLqobT+dT0C/jg=="
+  "resolved" "https://registry.npmjs.org/@better-scroll/observe-dom/-/observe-dom-2.5.1.tgz"
+  "version" "2.5.1"
+  dependencies:
+    "@better-scroll/core" "^2.5.1"
+
+"@better-scroll/observe-image@^2.4.2":
+  "integrity" "sha512-0Lhfj83o8EESwOxr8bfStCzNOokTm3KB7JeyMS8u/xl+3tyTuls9889cyAukYk4Yly1cS49pCGfj2P8YOiwtUg=="
+  "resolved" "https://registry.npmjs.org/@better-scroll/observe-image/-/observe-image-2.5.1.tgz"
+  "version" "2.5.1"
+  dependencies:
+    "@better-scroll/core" "^2.5.1"
+
+"@better-scroll/pull-down@^2.4.2":
+  "integrity" "sha512-Y6XcGu2NlevPg3k9VBRRFvpmfoTA+rO96JGdog2qKHclIPNXnsVwsIHtZfAm9weE/f9UuC4BnB+VUFRlucfupg=="
+  "resolved" "https://registry.npmjs.org/@better-scroll/pull-down/-/pull-down-2.5.1.tgz"
+  "version" "2.5.1"
+  dependencies:
+    "@better-scroll/core" "^2.5.1"
+
+"@better-scroll/scroll-bar@^2.4.2":
+  "integrity" "sha512-i6r60pWG/ztkFK2j5Gj54I0LJb2jGh5TWJNQBoW0gUkp28B+0JvBFTwZn9tF7beZCBorKR7Hvvu4O9A1TJy94Q=="
+  "resolved" "https://registry.npmjs.org/@better-scroll/scroll-bar/-/scroll-bar-2.5.1.tgz"
+  "version" "2.5.1"
+  dependencies:
+    "@better-scroll/core" "^2.5.1"
+
+"@better-scroll/shared-utils@^2.5.1":
+  "integrity" "sha512-AplkfSjXVYP9LZiD6JsKgmgQJ/mG4uuLmBuwLz8W5OsYc7AYTfN8kw6GqZ5OwCGoXkVhBGyd8NeC4xwYItp0aw=="
+  "resolved" "https://registry.npmjs.org/@better-scroll/shared-utils/-/shared-utils-2.5.1.tgz"
+  "version" "2.5.1"
+
 "@eslint/eslintrc@^0.3.0":
   "integrity" "sha1-1zbWlj1wA7ZRTmMkvsnGAqw0Axg="
   "resolved" "https://registry.npm.taobao.org/@eslint/eslintrc/download/@eslint/eslintrc-0.3.0.tgz"
@@ -1996,6 +2043,11 @@
   dependencies:
     "babel-runtime" "6.x"
 
+"async-validator@1.11.5":
+  "integrity" "sha512-XNtCsMAeAH1pdLMEg1z8/Bb3a8cdCbui9QbJATRFHHHW5kT6+NPI3zSVQUXgikTFITzsg+kYY5NTWhM2Orwt9w=="
+  "resolved" "https://registry.npmjs.org/async-validator/-/async-validator-1.11.5.tgz"
+  "version" "1.11.5"
+
 "async@^2.6.2":
   "integrity" "sha1-1yYl4jRKNlbjo61Pp0n6gymdgv8="
   "resolved" "https://registry.npm.taobao.org/async/download/async-2.6.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fasync%2Fdownload%2Fasync-2.6.3.tgz"
@@ -2061,6 +2113,11 @@
     "chalk" "^1.1.3"
     "esutils" "^2.0.2"
     "js-tokens" "^3.0.2"
+
+"babel-core@7.0.0-bridge.0":
+  "integrity" "sha512-poPX9mZH/5CSanm50Q+1toVci6pv5KSRv/5TWCwtzQS5XEwn40BcCrgIeMFWP9CKKIniKXNxoIOnOq4VVlGXhg=="
+  "resolved" "https://registry.npmjs.org/babel-core/-/babel-core-7.0.0-bridge.0.tgz"
+  "version" "7.0.0-bridge.0"
 
 "babel-eslint@^10.1.0":
   "integrity" "sha1-aWjlaKkQt4+zd5zdi2rC9HmUMjI="
@@ -2396,6 +2453,13 @@
     "base64-js" "^1.0.2"
     "ieee754" "^1.1.4"
     "isarray" "^1.0.0"
+
+"bufferutil@^4.0.1":
+  "integrity" "sha512-kukuqc39WOHtdxtw4UScxF/WVnMFVSQVKhtx3AjZJzhd0RGZZldcrfSEbVsWWe6KNH253574cq5F+wpv0G9pJw=="
+  "resolved" "https://registry.npmjs.org/bufferutil/-/bufferutil-4.0.7.tgz"
+  "version" "4.0.7"
+  dependencies:
+    "node-gyp-build" "^4.3.0"
 
 "builtin-status-codes@^3.0.0":
   "integrity" "sha1-hZgoeOIbmOHGZCXgPQF0eI9Wnug="
@@ -3432,6 +3496,14 @@
   "resolved" "https://registry.npm.taobao.org/cyclist/download/cyclist-1.0.1.tgz"
   "version" "1.0.1"
 
+"d@^1.0.1", "d@1":
+  "integrity" "sha512-m62ShEObQ39CfralilEQRjH6oAMtNCV1xJyEx5LpRYUVN+EviphDgUc/F3hnYbADmkiNs67Y+3ylmlG7Lnu+FA=="
+  "resolved" "https://registry.npmjs.org/d/-/d-1.0.1.tgz"
+  "version" "1.0.1"
+  dependencies:
+    "es5-ext" "^0.10.50"
+    "type" "^1.0.1"
+
 "dashdash@^1.12.0":
   "integrity" "sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA="
   "resolved" "https://registry.npm.taobao.org/dashdash/download/dashdash-1.14.1.tgz?cache=0&sync_timestamp=1601073602368&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdashdash%2Fdownload%2Fdashdash-1.14.1.tgz"
@@ -3840,10 +3912,10 @@
   "resolved" "https://registry.npm.taobao.org/electron-to-chromium/download/electron-to-chromium-1.3.645.tgz?cache=0&sync_timestamp=1611601526973&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Felectron-to-chromium%2Fdownload%2Felectron-to-chromium-1.3.645.tgz"
   "version" "1.3.645"
 
-"element-ui@^2.14.0":
-  "integrity" "sha1-3ptzqNHj47UOgrkjpfqVKVI5vUE="
-  "resolved" "https://registry.npm.taobao.org/element-ui/download/element-ui-2.15.0.tgz?cache=0&sync_timestamp=1610711151767&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Felement-ui%2Fdownload%2Felement-ui-2.15.0.tgz"
-  "version" "2.15.0"
+"element-ui@^2.13.1", "element-ui@^2.15.13":
+  "integrity" "sha512-LJoatEYX6WV74FqXBss8Xfho9fh9rjDSzrDrTyREdGb1h1R3uRvmLh5jqp2JU137aj4/BgqA3K06RQpQBX33Bg=="
+  "resolved" "https://registry.npmjs.org/element-ui/-/element-ui-2.15.13.tgz"
+  "version" "2.15.13"
   dependencies:
     "async-validator" "~1.8.1"
     "babel-helper-vue-jsx-merge-props" "^2.0.0"
@@ -3977,6 +4049,32 @@
     "is-callable" "^1.1.4"
     "is-date-object" "^1.0.1"
     "is-symbol" "^1.0.2"
+
+"es5-ext@^0.10.35", "es5-ext@^0.10.50":
+  "integrity" "sha512-BHLqn0klhEpnOKSrzn/Xsz2UIW8j+cGmo9JLzr8BiUapV8hPL9+FliFqjwr9ngW7jWdnxv6eO+/LqyhJVqgrjA=="
+  "resolved" "https://registry.npmjs.org/es5-ext/-/es5-ext-0.10.62.tgz"
+  "version" "0.10.62"
+  dependencies:
+    "es6-iterator" "^2.0.3"
+    "es6-symbol" "^3.1.3"
+    "next-tick" "^1.1.0"
+
+"es6-iterator@^2.0.3":
+  "integrity" "sha512-zw4SRzoUkd+cl+ZoE15A9o1oQd920Bb0iOJMQkQhl3jNc03YqVjAhG7scf9C5KWRU/R13Orf588uCC6525o02g=="
+  "resolved" "https://registry.npmjs.org/es6-iterator/-/es6-iterator-2.0.3.tgz"
+  "version" "2.0.3"
+  dependencies:
+    "d" "1"
+    "es5-ext" "^0.10.35"
+    "es6-symbol" "^3.1.1"
+
+"es6-symbol@^3.1.1", "es6-symbol@^3.1.3":
+  "integrity" "sha512-NJ6Yn3FuDinBaBRWl/q5X/s4koRHBrgKAu+yGI6JCBeiu3qrcbJhwT2GeR/EXVfylRk8dpQVJoLEFhK+Mu31NA=="
+  "resolved" "https://registry.npmjs.org/es6-symbol/-/es6-symbol-3.1.3.tgz"
+  "version" "3.1.3"
+  dependencies:
+    "d" "^1.0.1"
+    "ext" "^1.1.2"
 
 "escalade@^3.1.1":
   "integrity" "sha1-2M/ccACWXFoBdLSoLqpcBVJ0LkA="
@@ -4289,6 +4387,13 @@
     "type-is" "~1.6.18"
     "utils-merge" "1.0.1"
     "vary" "~1.1.2"
+
+"ext@^1.1.2":
+  "integrity" "sha512-6hxeJYaL110a9b5TEJSj0gojyHQAmA2ch5Os+ySCiA1QGdS697XWY1pzsrSjqA9LDEEgdB/KypIlR59RcLuHYw=="
+  "resolved" "https://registry.npmjs.org/ext/-/ext-1.7.0.tgz"
+  "version" "1.7.0"
+  dependencies:
+    "type" "^2.7.2"
 
 "extend-shallow@^2.0.1":
   "integrity" "sha1-Ua99YUrZqfYQ6huvu5idaxxWiQ8="
@@ -6000,6 +6105,23 @@
     "json-schema" "0.2.3"
     "verror" "1.10.0"
 
+"jwchat@^1.0.12":
+  "integrity" "sha512-PqdzjqaARD01u9RjkjUVb/q4gSV2teKNbAYHiBJ93gfo14q2R/7qJCkldzw6qK+hUmmNNpjwCQFl2Dyjbjkhug=="
+  "resolved" "https://registry.npmjs.org/jwchat/-/jwchat-1.0.12.tgz"
+  "version" "1.0.12"
+  dependencies:
+    "@better-scroll/core" "^2.4.2"
+    "@better-scroll/mouse-wheel" "^2.4.2"
+    "@better-scroll/observe-dom" "^2.4.2"
+    "@better-scroll/observe-image" "^2.4.2"
+    "@better-scroll/pull-down" "^2.4.2"
+    "@better-scroll/scroll-bar" "^2.4.2"
+    "async-validator" "1.11.5"
+    "babel-core" "7.0.0-bridge.0"
+    "element-ui" "^2.13.1"
+    "vue" "^2.6.11"
+    "wechat-emoji-parser" "^1.1.0"
+
 "killable@^1.0.1":
   "integrity" "sha1-TIzkQRh6Bhx0dPuHygjipjgZSJI="
   "resolved" "https://registry.npm.taobao.org/killable/download/killable-1.0.1.tgz"
@@ -6774,6 +6896,11 @@
   "resolved" "https://registry.npm.taobao.org/neo-async/download/neo-async-2.6.2.tgz"
   "version" "2.6.2"
 
+"next-tick@^1.1.0":
+  "integrity" "sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ=="
+  "resolved" "https://registry.npmjs.org/next-tick/-/next-tick-1.1.0.tgz"
+  "version" "1.1.0"
+
 "nice-try@^1.0.4":
   "integrity" "sha1-ozeKdpbOfSI+iPybdkvX7xCJ42Y="
   "resolved" "https://registry.npm.taobao.org/nice-try/download/nice-try-1.0.5.tgz?cache=0&sync_timestamp=1602353330797&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnice-try%2Fdownload%2Fnice-try-1.0.5.tgz"
@@ -6810,6 +6937,11 @@
   "integrity" "sha1-Mt6ir7Ppkm8C7lzoeUkCaRpna/M="
   "resolved" "https://registry.npm.taobao.org/node-forge/download/node-forge-0.10.0.tgz?cache=0&sync_timestamp=1599010719234&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnode-forge%2Fdownload%2Fnode-forge-0.10.0.tgz"
   "version" "0.10.0"
+
+"node-gyp-build@^4.3.0":
+  "integrity" "sha512-NTZVKn9IylLwUzaKjkas1e4u2DLNcV4rdYagA4PWdPwW87Bi7z+BznyKSRwS/761tV/lzCGXplWsiaMjLqP2zQ=="
+  "resolved" "https://registry.npmjs.org/node-gyp-build/-/node-gyp-build-4.6.0.tgz"
+  "version" "4.6.0"
 
 "node-ipc@^9.1.1":
   "integrity" "sha1-HfPwadEDGErpEn+ohdva6lakQ28="
@@ -9298,6 +9430,13 @@
   "resolved" "https://registry.npm.taobao.org/statuses/download/statuses-1.5.0.tgz?cache=0&sync_timestamp=1609654090567&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fstatuses%2Fdownload%2Fstatuses-1.5.0.tgz"
   "version" "1.5.0"
 
+"stompjs@^2.3.3":
+  "integrity" "sha512-5l/Ogz0DTFW7TrpHF0LAETGqM/so8UxNJvYZjJKqcX31EVprSQgnGkO80tZctPC/lFBDUrSFiTG3xd0R27XAIA=="
+  "resolved" "https://registry.npmjs.org/stompjs/-/stompjs-2.3.3.tgz"
+  "version" "2.3.3"
+  optionalDependencies:
+    "websocket" "latest"
+
 "stream-browserify@^2.0.1":
   "integrity" "sha1-h1IdOKRKp+6RzhzSpH3wy0ndZgs="
   "resolved" "https://registry.npm.taobao.org/stream-browserify/download/stream-browserify-2.0.2.tgz"
@@ -10020,6 +10159,16 @@
     "media-typer" "0.3.0"
     "mime-types" "~2.1.24"
 
+"type@^1.0.1":
+  "integrity" "sha512-+5nt5AAniqsCnu2cEQQdpzCAh33kVx8n0VoFidKpB1dVVLAN/F+bgVOqOJqOnEnrhp222clB5p3vUlD+1QAnfg=="
+  "resolved" "https://registry.npmjs.org/type/-/type-1.2.0.tgz"
+  "version" "1.2.0"
+
+"type@^2.7.2":
+  "integrity" "sha512-dzlvlNlt6AXU7EBSfpAscydQ7gXB+pPGsPnfJnZpiNJBDj7IaJzQlBZYGdEi4R9HmPdBv2XmWJ6YUtoTa7lmCw=="
+  "resolved" "https://registry.npmjs.org/type/-/type-2.7.2.tgz"
+  "version" "2.7.2"
+
 "typedarray-to-buffer@^3.1.5":
   "integrity" "sha1-qX7nqf9CaRufeD/xvFES/j/KkIA="
   "resolved" "https://registry.npm.taobao.org/typedarray-to-buffer/download/typedarray-to-buffer-3.1.5.tgz"
@@ -10232,6 +10381,13 @@
   "integrity" "sha1-1QyMrHmhn7wg8pEfVuuXP04QBw8="
   "resolved" "https://registry.npm.taobao.org/use/download/use-3.1.1.tgz"
   "version" "3.1.1"
+
+"utf-8-validate@^5.0.2":
+  "integrity" "sha512-Z6czzLq4u8fPOyx7TU6X3dvUZVvoJmxSQ+IcrlmagKhilxlhZgxPK6C5Jqbkw1IDUmFTM+cz9QDnnLTwDz/2gQ=="
+  "resolved" "https://registry.npmjs.org/utf-8-validate/-/utf-8-validate-5.0.10.tgz"
+  "version" "5.0.10"
+  dependencies:
+    "node-gyp-build" "^4.3.0"
 
 "util-deprecate@^1.0.1", "util-deprecate@^1.0.2", "util-deprecate@~1.0.1":
   "integrity" "sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8="
@@ -10449,7 +10605,7 @@
   "resolved" "https://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@^2 || ^3.0.0-0", "vue@^2.0.0", "vue@^2.4.3", "vue@^2.5.17", "vue@^2.6.0", "vue@^2.6.12", "vue@>=2.5.0":
+"vue@^2 || ^3.0.0-0", "vue@^2.0.0", "vue@^2.4.3", "vue@^2.5.17", "vue@^2.6.0", "vue@^2.6.11", "vue@^2.6.12", "vue@>=2.5.0":
   "integrity" "sha1-9evU+mvShpQD4pqJau1JBEVskSM="
   "resolved" "https://registry.npm.taobao.org/vue/download/vue-2.6.12.tgz?cache=0&sync_timestamp=1609360160361&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue%2Fdownload%2Fvue-2.6.12.tgz"
   "version" "2.6.12"
@@ -10659,6 +10815,23 @@
   "resolved" "https://registry.npm.taobao.org/websocket-extensions/download/websocket-extensions-0.1.4.tgz"
   "version" "0.1.4"
 
+"websocket@latest":
+  "integrity" "sha512-PRDso2sGwF6kM75QykIesBijKSVceR6jL2G8NGYyq2XrItNC2P5/qL5XeR056GhA+Ly7JMFvJb9I312mJfmqnQ=="
+  "resolved" "https://registry.npmjs.org/websocket/-/websocket-1.0.34.tgz"
+  "version" "1.0.34"
+  dependencies:
+    "bufferutil" "^4.0.1"
+    "debug" "^2.2.0"
+    "es5-ext" "^0.10.50"
+    "typedarray-to-buffer" "^3.1.5"
+    "utf-8-validate" "^5.0.2"
+    "yaeti" "^0.0.6"
+
+"wechat-emoji-parser@^1.1.0":
+  "integrity" "sha512-FOB3KIhyEYmYledm/gnyHitL+sq1SGvDPpUE1AYxougmcd1/ibGHld/J+GDC+8DtgxsmGpY5f30gTFX0zwtTJQ=="
+  "resolved" "https://registry.npmjs.org/wechat-emoji-parser/-/wechat-emoji-parser-1.1.1.tgz"
+  "version" "1.1.1"
+
 "which-module@^2.0.0":
   "integrity" "sha1-2e8H3Od7mQK4o6j6SzHD4/fm6Ho="
   "resolved" "https://registry.npm.taobao.org/which-module/download/which-module-2.0.0.tgz"
@@ -10773,6 +10946,11 @@
   "integrity" "sha1-h2nsCNA7HqLfJQCs71YXQ7u5qxg="
   "resolved" "https://registry.npm.taobao.org/y18n/download/y18n-5.0.5.tgz?cache=0&sync_timestamp=1609798693274&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fy18n%2Fdownload%2Fy18n-5.0.5.tgz"
   "version" "5.0.5"
+
+"yaeti@^0.0.6":
+  "integrity" "sha512-MvQa//+KcZCUkBTIC9blM+CU9J2GzuTytsOUwf2lidtvkx/6gnEp1QvJv34t9vdjhFmha/mUiNDbN0D0mJWdug=="
+  "resolved" "https://registry.npmjs.org/yaeti/-/yaeti-0.0.6.tgz"
+  "version" "0.0.6"
 
 "yallist@^2.1.2":
   "integrity" "sha1-HBH5IY8HYImkfdUS+TxmmaaoHVI="

@@ -54,6 +54,6 @@ public class SysRegisterService {
 
         String userId = sysUserService.register(newUser);
         System.out.println(userId);
-        return sysUserService.findByUserName(sysRegister.getUserName());
+        return newUser;
     }
 }

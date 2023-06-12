@@ -1,17 +1,22 @@
 package com.rkr.service;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.rkr.domain.constant.RedisKeyConstants;
 import com.rkr.domain.constant.UserType;
 import com.rkr.domain.entity.*;
 import com.rkr.mapper.SysUserMapper;
 import com.rkr.utils.RequestUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Package com.rkr.service
@@ -44,6 +49,9 @@ public class SysUserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Resource
+    private RedisService redisService;
+
     /**
      * 根据用户名查询用户信息
      * @param username
@@ -52,10 +60,15 @@ public class SysUserService {
     public SysUser loadUserByUsername(String username) {
         QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
         wrapper.eq("user_name", username);
+        String RedisKey = RedisKeyConstants.USER_INFO_KEY + "name:" + username;
+        if (redisService.hasKey(RedisKey)) {
+            return redisService.get(RedisKey, SysUser.class);
+        }
         List<SysUser> list = sysUserMapper.selectList(wrapper);
         if (list.size() == 0) {
             return null;
         }
+        redisService.set(RedisKey, list.get(0));
         return list.get(0);
     }
 
@@ -64,7 +77,19 @@ public class SysUserService {
      * @return List<SysUser>
      */
     public List<SysUser> list() {
-        return sysUserMapper.selectList(null);
+        String RedisHashKey = RedisKeyConstants.USER_LIST_KEY;
+        if(redisService.hasKey(RedisHashKey)){
+            return redisService.getHash(RedisHashKey, SysUser.class);
+        }
+        List<SysUser> list = sysUserMapper.selectList(null);
+        if(list != null){
+            Map<String,String> map = new HashMap<>();
+            for(SysUser sysUser : list){
+                map.put(sysUser.getId(), JSON.toJSONString(sysUser));
+            }
+            redisService.setHash(RedisHashKey,map);
+        }
+        return list;
     }
 
     /**
@@ -73,7 +98,12 @@ public class SysUserService {
      * @return List<SysUser>
      */
     public List<SysUser> findByUserRole(int roleId) {
-        return sysUserMapper.findByUserRole(roleId);
+        String RedisKey = RedisKeyConstants.USER_LIST_KEY + "role:" + roleId;
+        List<SysUser> list = sysUserMapper.findByUserRole(roleId);
+        if(list.size() == 0){
+            return null;
+        }
+        return list;
     }
 
     /**
@@ -82,6 +112,14 @@ public class SysUserService {
      * @return SysUser
      */
     public SysUser findById(String id) {
+        String RedisKey = RedisKeyConstants.USER_INFO_KEY + id;
+        if(redisService.hasKey(RedisKey)){
+            return redisService.get(RedisKey, SysUser.class);
+        }
+        SysUser sysUser = sysUserMapper.selectById(id);
+        if(sysUser != null){
+            redisService.set(RedisKey,sysUser);
+        }
         return sysUserMapper.selectById(id);
     }
 
@@ -91,9 +129,7 @@ public class SysUserService {
      * @return SysUser
      */
     public SysUser findByUserName(String userName) {
-        QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
-        wrapper.eq("user_name", userName);
-        return sysUserMapper.selectOne(wrapper);
+        return loadUserByUsername(userName);
     }
 
     /**
@@ -101,11 +137,26 @@ public class SysUserService {
      * @param sysUser
      */
     public void save(SysUser sysUser) {
+        String RedisKey = RedisKeyConstants.USER_INFO_KEY + sysUser.getId();
+        String RedisNameKey = RedisKeyConstants.USER_INFO_KEY + "name:" + sysUser.getUserName();
+        String RedisHashKey = RedisKeyConstants.USER_LIST_KEY;
         if (sysUser.getId() != null) {
+            if(redisService.hasKey(RedisKey)){
+                redisService.delete(RedisKey);
+            }
+            if(redisService.hasKey(RedisNameKey)){
+                redisService.delete(RedisNameKey);
+            }
+            if(redisService.hasHashKey(RedisHashKey,sysUser.getId())){
+                redisService.deleteOne(RedisHashKey,sysUser.getId());
+            }
             sysUserMapper.updateById(sysUser);
-            return;
+        } else {
+            sysUserMapper.insert(sysUser);
         }
-        sysUserMapper.insert(sysUser);
+        redisService.set(RedisKey,sysUser);
+        redisService.set(RedisNameKey,sysUser);
+        redisService.setOne(RedisHashKey,sysUser.getId(),sysUser);
     }
 
     /**
@@ -139,19 +190,6 @@ public class SysUserService {
         String userId = loadUserByUsername(sysUser.getUserName()).getId();
         sysUserRoleService.save(new SysUserRole().toBuilder().userId(userId).roleId(1).build());
         return userId;
-
-    }
-
-
-    /**
-     * 重置当前用户的密码
-     * @param newPassWord
-     */
-    public void resetPwd(String newPassWord){
-        String userId = RequestUtils.getCurrentLoginUser().getUser().getId();
-        SysUser sysUser = findById(userId);
-        sysUser.setPassword(bCryptPasswordEncoder.encode(newPassWord));
-        save(sysUser);
     }
 
     /**
@@ -162,15 +200,6 @@ public class SysUserService {
     public void resetPwd(String userId, String newPassWord){
         SysUser sysUser = findById(userId);
         sysUser.setPassword(bCryptPasswordEncoder.encode(newPassWord));
-        save(sysUser);
-    }
-
-    /**
-     * 重置用户密码
-     * @param sysUser
-     */
-    public void resetPwd(SysUser sysUser){
-        sysUser.setPassword(bCryptPasswordEncoder.encode(sysUser.getPassword()));
         save(sysUser);
     }
 
@@ -232,5 +261,6 @@ public class SysUserService {
      * @param SysUserRoom
      */
     public void HouseholdInfoDelete(SysUserRoom SysUserRoom) {
+        SysUserRoomService.delete(SysUserRoom.getId());
     }
 }

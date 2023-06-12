@@ -1,17 +1,16 @@
 package com.rkr.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.rkr.domain.constant.RedisKeyConstants;
 import com.rkr.domain.entity.SysChargeType;
 import com.rkr.domain.entity.SysUserCharge;
 import com.rkr.mapper.SysUserChargeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Package com.rkr.service
@@ -34,12 +33,27 @@ public class SysUserChargeService {
     @Autowired
     private SysChargeTypeService sysChargeTypeService;
 
+    @Resource
+    private RedisService redisService;
+
     /**
      * 获取所有用户记录信息
      * @return List<SysUserCharge>
      */
     public List<SysUserCharge> list() {
-        return sysUserChargeMapper.selectList(null);
+        String redisHashKey = RedisKeyConstants.USER_CHARGE_LIST_KEY;
+        if(redisService.hasKey(redisHashKey)){
+            return redisService.getHash(redisHashKey,SysUserCharge.class);
+        }
+        List<SysUserCharge> list = sysUserChargeMapper.selectList(null);
+        if (list != null) {
+            Map<String, String> map = new HashMap<>();
+            list.forEach(item -> {
+                map.put(item.getId(), JSONObject.toJSONString(item));
+            });
+            redisService.setHash(redisHashKey, map);
+        }
+        return list;
     }
 
     /**
@@ -70,7 +84,7 @@ public class SysUserChargeService {
     }
 
     /**
-     * 查询用户信息
+     * 查询用户信息，不太可能重复查看，不加redis
      * @param userId
      * @param chargeTypeId
      * @param month

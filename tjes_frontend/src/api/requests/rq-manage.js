@@ -41,7 +41,7 @@ export let saveRqInfo = (from) => {
 export let getUsers = () => {
   return api.get('/system/user/list')
 }
-export let getEstateUser = () => {
+export let getAdmins = () => {
   return api.get('/system/user/admin/list')
 }
 
@@ -213,6 +213,16 @@ export let saveUserInfo = (from) => {
 export let getUserAvatar = () => {
   return api.get('/system/user/avatar/list')
 }
+
 export let saveUserAvatar = (from) => {
   return api.post('/system/user/avatar/save', from)
 }
+
+export let getGroupUser = (from) => {
+  return api.post('/system/chat/userList', from)
+}
+
+export let getHistory = (from) => {
+  return api.post('/system/chatInfo/history', from)
+}
+

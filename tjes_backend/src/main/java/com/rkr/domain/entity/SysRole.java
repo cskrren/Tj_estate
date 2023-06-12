@@ -24,6 +24,4 @@ public class SysRole {
      * 角色Key
      */
     private String roleKey;
-
-
 }

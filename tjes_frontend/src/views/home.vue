@@ -129,9 +129,14 @@ export default {
   },
   data () {
     return {
-      login_img_src: 'http://localhost:8082/login/code',
+      login_img_src: process.env.VUE_APP_API_ROOT + '/login/code',
       login_form_data: {},
-      carousel_img_list: ['http://localhost:8082/images/1.jpg', 'http://localhost:8082/images/2.jpg', 'http://localhost:8082/images/3.jpg', 'http://localhost:8082/images/4.jpg'],
+      carousel_img_list: [
+        process.env.VUE_APP_API_ROOT+'/images/1.jpg', 
+        process.env.VUE_APP_API_ROOT+'/images/2.jpg',  
+        process.env.VUE_APP_API_ROOT+'/images/3.jpg', 
+        process.env.VUE_APP_API_ROOT+'/images/4.jpg', 
+      ],
       tabListNoTitle: [
         {
           key: 'em_notice',

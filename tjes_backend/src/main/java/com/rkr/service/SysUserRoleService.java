@@ -1,10 +1,12 @@
 package com.rkr.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.rkr.domain.constant.RedisKeyConstants;
 import com.rkr.domain.entity.SysRole;
 import com.rkr.domain.entity.SysUserRole;
 import com.rkr.mapper.SysUserRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,6 +33,9 @@ public class SysUserRoleService {
     @Autowired
     private SysRoleService sysRoleService;
 
+    @Resource
+    RedisService redisService;
+
     /**
      * 根据用户ID查询用户角色信息
      * @param userId
@@ -39,13 +44,16 @@ public class SysUserRoleService {
     public SysUserRole findByUserId(String userId) {
         QueryWrapper<SysUserRole> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id",userId);
+        String RedisKey = RedisKeyConstants.USER_ROLE_INFO_KEY + userId;
+        if(redisService.hasKey(RedisKey)){
+            return redisService.get(RedisKey,SysUserRole.class);
+        }
         List<SysUserRole> sysUserRoles = sysUserRoleMapper.selectList(wrapper);
         if(sysUserRoles.size() == 0){
             return null;
         }
+        redisService.set(RedisKey,sysUserRoles.get(0));
         return sysUserRoles.get(0);
-
-
     }
 
     /**
@@ -64,11 +72,16 @@ public class SysUserRoleService {
      * @param sysUserRole
      */
     public void save(SysUserRole sysUserRole) {
+        String redisKey = RedisKeyConstants.USER_ROLE_INFO_KEY + sysUserRole.getUserId();
         if (findByUserId(sysUserRole.getUserId()) == null) {
+            if(redisService.hasKey(redisKey)){
+                redisService.delete(redisKey);
+            }
             sysUserRoleMapper.insert(sysUserRole);
-            return;
+        } else {
+            sysUserRoleMapper.updateById(sysUserRole);
         }
-        sysUserRoleMapper.updateById(sysUserRole);
+        redisService.set(redisKey,sysUserRole);
     }
 
     /**
@@ -77,6 +90,10 @@ public class SysUserRoleService {
      * @return boolean
      */
     public boolean deleteByUserId(String userId) {
+        String redisKey = RedisKeyConstants.USER_ROLE_INFO_KEY + userId;
+        if(redisService.hasKey(redisKey)){
+            redisService.delete(redisKey);
+        }
         QueryWrapper<SysUserRole> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id", userId);
         return sysUserRoleMapper.delete(wrapper) > 0;

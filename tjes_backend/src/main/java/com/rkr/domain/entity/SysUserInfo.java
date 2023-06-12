@@ -39,4 +39,8 @@ public class SysUserInfo {
      * 用户头像
      */
     private String userAvatar;
+    /**
+     * 用户状态
+     */
+    private Integer online;
 }

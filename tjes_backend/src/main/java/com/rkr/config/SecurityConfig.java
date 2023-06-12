@@ -75,18 +75,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(
                 "/login/**",
-                "/register/**",
-                "/passwordfind/**",
+                "/register",
+                "/passwordfind",
                 "/system/facilities/list",
                 "/system/notice/list",
                 "/system/user/admin/list",
-                "/system/user/isAdmin",
-                "/system/download/excel/**",
-                "/system/user/information/**",
-                "/system/user/avatar/**",
                 "/system/smsCode/**",
-                "/images/**",
-                "/static/**"
+                "/images/**"
         );
     }
 

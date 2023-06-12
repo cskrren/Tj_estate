@@ -204,7 +204,9 @@ public  class SysUserController {
     public AjaxResult getUserInfoList() {
         //获取当然登录用户的id
         LoginUser loginUser = RequestUtils.getCurrentLoginUser();
-        System.out.println(loginUser.getUser().getId());
+        if(loginUser == null){
+            return AjaxResult.error("请先登录");
+        }
         return AjaxResult.success(sysUserService.UserInfoList(loginUser.getUser().getId()));
     }
 
@@ -226,7 +228,9 @@ public  class SysUserController {
     public AjaxResult getUserAvatar() {
         //获取当然登录用户的id
         LoginUser loginUser = RequestUtils.getCurrentLoginUser();
-        System.out.println(loginUser.getUser().getId());
+        if(loginUser == null){
+            return AjaxResult.error("请先登录");
+        }
         return AjaxResult.success(sysUserInfoService.getUserAvatar(loginUser.getUser().getId()));
     }
 

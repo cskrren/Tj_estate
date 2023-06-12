@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-import { getEstateUser, } from '@/api/requests/rq-manage.js'
+import { getAdmins } from '@/api/requests/rq-manage.js'
 
 export default {
   name: "estate_user_list",
@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     get_estateUser () {
-      getEstateUser().then(res => {
+      getAdmins().then(res => {
         this.estate_data_list = res.data
       })
     }

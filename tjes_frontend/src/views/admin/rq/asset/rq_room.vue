@@ -22,13 +22,13 @@
           type="primary"
           style="height: 38px; margin-left: 10px;"
           @click="room_save_modalVisible = true"
-        >添加楼宇</a-button>
+        >添加房间</a-button>
         <a-button
           type="danger"
           v-if="table_selectedRowKeys.length > 0"
           style="height: 38px; margin-left: 10px;"
           @click="Del_batchData"
-        >删除被选择的「楼宇」</a-button>
+        >删除被选择的「房间」</a-button>
       </div>
       <a-table
         :loading="loading"
@@ -299,7 +299,7 @@ export default {
       })
     },
     downloadRoomsJsonp() {
-      const url = 'http://localhost:8082//system/download/excel/rooms'
+      const url = process.env.VUE_APP_API_ROOT +'/system/download/excel/rooms'
       this.$jsonp(url, { callback: 'jsonpCallback' }).then(response => {
         const blob = new Blob([response.data], { type: 'application/vnd.ms-excel' });
         const fileName = 'room.xlsx';

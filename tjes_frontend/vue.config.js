@@ -51,27 +51,28 @@ const cdn = {
 }
 // gzip 相关
 const isGZIP = process.env.VUE_APP_GZIP == 'ON'
-
 module.exports = {
   publicPath: './',
-    lintOnSave: true,
-    configureWebpack: {
-        //关闭 webpack 的性能提示
-        performance: {
-            hints:false
+  lintOnSave: true,
+  configureWebpack: {
+      //关闭 webpack 的性能提示
+      performance: {
+          hints:false
+      }
+  },
+  devServer: {
+    https: false,
+    port: process.env.VUE_APP_PORT,
+    proxy: {
+      '/api': {
+        target: process.env.VUE_APP_API_ROOT,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''      //相当于用api代替target里面的地址，后面组件中调用接口时直接用api代替
         }
-    },
-    devServer: {
-        proxy: {
-            '/system/download': {
-                target: 'http://localhost:8082',//后端接口地址
-                changeOrigin: true,//是否允许跨越
-                pathRewrite: {
-                    '^/system/download': '/system/download'//重写,
-                }
-            }
-        }
-    },
+      }
+    }
+  },
   transpileDependencies: ['element-ui'],
   configureWebpack: config => {
     config.resolve.modules = ['node_modules', 'assets/sprites']

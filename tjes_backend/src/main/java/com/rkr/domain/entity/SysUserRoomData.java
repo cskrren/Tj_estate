@@ -59,6 +59,6 @@ public class SysUserRoomData {
      * 房间ID
      */
     @ExcelProperty("房间编号")
-    private String roomId;
+    private Integer roomId;
 
 }

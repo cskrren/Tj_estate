@@ -4,16 +4,20 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.rkr.domain.constant.Option;
+import com.rkr.domain.constant.RedisKeyConstants;
 import com.rkr.domain.constant.SMS;
 import com.rkr.domain.entity.SysRepair;
 import com.rkr.domain.entity.SysSmsCode;
 import com.rkr.mapper.SysRepairMapper;
 import com.rkr.utils.RequestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Package com.rkr.service
@@ -42,13 +46,26 @@ public class SysRepairService {
     @Autowired
     private SysOptionsService sysOptionsService;
 
+    @Resource
+    private RedisService redisService;
+
+    private Map<String, Boolean> lazyFLag = new HashMap<>();
+
     /**
      * 根据ID查询
      * @param id
      * @return
      */
     public SysRepair findById(Integer id) {
-        return sysRepairMapper.selectById(id);
+        String redisKey = RedisKeyConstants.REPAIR_INFO_KEY + id;
+        if (redisService.hasKey(redisKey)) {
+            return redisService.get(redisKey, SysRepair.class);
+        }
+        SysRepair sysRepair = sysRepairMapper.selectById(id);
+        if (sysRepair != null) {
+            redisService.set(redisKey, sysRepair);
+        }
+        return sysRepair;
     }
 
     /**
@@ -56,7 +73,19 @@ public class SysRepairService {
      * @return
      */
     public List<SysRepair> list() {
-        return sysRepairMapper.selectList(null);
+        String redisHashKey = RedisKeyConstants.REPAIR_LIST_KEY;
+        if (redisService.hasKey(redisHashKey)) {
+            return redisService.getHash(redisHashKey, SysRepair.class);
+        }
+        List<SysRepair> sysRepairList = sysRepairMapper.selectList(null);
+        if (sysRepairList != null) {
+            Map<String, String> map = new HashMap<>();
+            for (SysRepair sysRepair : sysRepairList) {
+                map.put(RedisKeyConstants.REPAIR_INFO_KEY + sysRepair.getId(), JSON.toJSONString(sysRepair));
+            }
+            redisService.setHash(redisHashKey, map);
+        }
+        return sysRepairList;
     }
 
     /**
@@ -67,7 +96,20 @@ public class SysRepairService {
     public List<SysRepair> findByUserId(String userId){
         QueryWrapper<SysRepair> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id",userId);
-        return sysRepairMapper.selectList(wrapper);
+        String redisHashKey = RedisKeyConstants.REPAIR_LIST_KEY + userId;
+        if (lazyFLag.containsKey(userId) && !lazyFLag.get(redisHashKey) && redisService.hasKey(redisHashKey)) {
+            return redisService.getHash(redisHashKey, SysRepair.class);
+        }
+        List<SysRepair> sysRepairList = sysRepairMapper.selectList(wrapper);
+        lazyFLag.put(redisHashKey, false);
+        if (sysRepairList != null) {
+            Map<String, String> map = new HashMap<>();
+            for (SysRepair sysRepair : sysRepairList) {
+                map.put(sysRepair.getId().toString(), JSON.toJSONString(sysRepair));
+            }
+            redisService.setHash(redisHashKey, map);
+        }
+        return sysRepairList;
     }
 
     /**
@@ -75,11 +117,24 @@ public class SysRepairService {
      * @param sysRepair
      */
     public void save(SysRepair sysRepair) {
-        if (findById(sysRepair.getId()) != null) {
+        String redisKey = RedisKeyConstants.REPAIR_INFO_KEY + sysRepair.getId();
+        String redisHashKey = RedisKeyConstants.REPAIR_LIST_KEY;
+        SysRepair oldRepair = findById(sysRepair.getId());
+        if (oldRepair != null) {
+            if(redisService.hasKey(redisKey)){
+                redisService.delete(redisKey);
+            }
+            if(redisService.hasHashKey(redisHashKey, sysRepair.getId().toString())){
+                redisService.deleteOne(redisHashKey, sysRepair.getId().toString());
+            }
             sysRepairMapper.updateById(sysRepair);
-            return;
+            lazyFLag.put(oldRepair.getUserId(), true);
+        } else {
+            sysRepairMapper.insert(sysRepair);
         }
-        sysRepairMapper.insert(sysRepair);
+        lazyFLag.put(sysRepair.getUserId(), true);
+        redisService.set(redisKey, sysRepair);
+        redisService.setOne(redisHashKey, sysRepair.getId().toString(), sysRepair);
     }
 
     /**
@@ -113,6 +168,19 @@ public class SysRepairService {
      * @return
      */
     public boolean delete(String id) {
+        SysRepair deleteRepair = findById(Integer.valueOf(id));
+        if(deleteRepair == null) {
+            return false;
+        }
+        String redisKey = RedisKeyConstants.REPAIR_INFO_KEY + id;
+        String redisHashKey = RedisKeyConstants.REPAIR_LIST_KEY;
+        if(redisService.hasKey(redisKey)){
+            redisService.delete(redisKey);
+        }
+        if(redisService.hasHashKey(redisHashKey, id)){
+            redisService.deleteOne(redisHashKey, id);
+        }
+        lazyFLag.put(deleteRepair.getUserId(), true);
         return sysRepairMapper.deleteById(id) > 0;
     }
 }

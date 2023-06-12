@@ -3,18 +3,17 @@
     <a-card :loading="loading" title="小区物业人员管理">
       <div class="head">
         <span>搜索类型</span>
-        <a-select size="large" default-value="单位名称" v-model="estateUser_query_type" style="width: 200px;">
-          <a-select-option value="name">单位名称</a-select-option>
-          <a-select-option value="chargePerson">负责人</a-select-option>
-          <a-select-option value="contactPerson">联系人</a-select-option>
-          <a-select-option value="phone">电话</a-select-option>
+        <a-select size="large" default-value="" v-model="estateUser_query_type" style="width: 200px;">
+          <a-select-option value="userName">用户名</a-select-option>
+          <a-select-option value="fullName">真实姓名</a-select-option>
+          <a-select-option value="phone">联系电话</a-select-option>
+          <a-select-option value="status">用户状态</a-select-option>
         </a-select>
         <a-input-search v-model="estateUser_query_text" placeholder="输入要搜索的文本"
           :enter-button="estateUser_query_buttonTitle" size="large"
           @search="estateUser_query_buttonTitle == '搜索' ? Query_estateUserDataList() : Get_estateUserDataList()" />
-        <a-button type="primary" style="height: 40px;" @click="estateUser_save_modalVisible = true">添加物业人员</a-button>
         <a-button type="danger" v-if="table_selectedRowKeys.length > 0" style="height: 40px; margin-left: 10px;"
-          @click="Del_batchData">删除被选择的「物业人员」</a-button>
+          @click="Del_batchData">删除被选择的「账号」</a-button>
       </div>
       <a-table :data-source="estateUser_data_list"
         :row-selection="{ selectedRowKeys: table_selectedRowKeys, onChange: Table_selectChange }">
@@ -29,48 +28,18 @@
         <a-table-column key="action" title="操作">
           <template slot-scope="text, record">
             <a-button-group>
-              <a-button type="primary" @click="Edit_estateUserData(record)">编辑</a-button>
-              <a-button type="danger" @click="Del_estateUserData(record.id)">删除</a-button>
+              <!-- <a-button type="primary" @click="Edit_estateUserData(record)">编辑</a-button> -->
+              <a-button type="danger" @click="Del_estateUserData(record.id)">删除账号</a-button>
             </a-button-group>
           </template>
         </a-table-column>
       </a-table>
     </a-card>
-    <!-- 新增或保存设施提示框 -->
-    <a-modal v-model="estateUser_save_modalVisible" :title="estateUser_save_title" ok-text="确认" cancel-text="取消"
-      :maskClosable="false" :destroyOnClose="false" @ok="Save_estateUserData">
-      <a-form-model :model="estateUser_form_data" :label-col="labelCol" :wrapper-col="wrapperCol">
-        <el-row :gutter="20">
-          <el-col :span="12" :offset="0">
-            <a-form-model-item label="用户名">
-              <a-input v-model="estateUser_form_data.userName" />
-            </a-form-model-item>
-          </el-col>
-          <el-col :span="12" :offset="0">
-            <a-form-model-item label="密码">
-              <a-input value="默认密码123456" :disabled="true"  />
-            </a-form-model-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12" :offset="0">
-            <a-form-model-item label="真实名称">
-              <a-input v-model="estateUser_form_data.fullName" />
-            </a-form-model-item>
-          </el-col>
-          <el-col :span="12" :offset="0">
-            <a-form-model-item label="联系电话">
-              <a-input v-model="estateUser_form_data.phone" />
-            </a-form-model-item>
-          </el-col>
-        </el-row>
-      </a-form-model>
-    </a-modal>
   </page-main>
 </template>
 
 <script>
-import { getEstateUser, saveUser, deleteUser } from '@/api/requests/rq-manage.js'
+import { getUsers, saveUser, deleteUser } from '@/api/requests/rq-manage.js'
 import { Success, Warning } from '@/util/message.js'
 import { rTime } from '@/util/time.js'
 
@@ -81,10 +50,9 @@ export default {
       labelCol: { span: 8 },
       wrapperCol: { span: 14 },
       table_selectedRowKeys: [],
-      estateUser_query_type: 'name',
+      estateUser_query_type: 'userName',
       estateUser_query_buttonTitle: '搜索',
       estateUser_query_text: '',
-      estateUser_save_title: '新增物业人员',
       estateUser_save_modalVisible: false,
       estateUser_form_data: {},
       estateUser_data_list: [],
@@ -102,10 +70,9 @@ export default {
   },
   methods: {
     Get_estateUserDataList() {
-      getEstateUser().then(res => {
+      getUsers().then(res => {
         this.estateUser_query_buttonTitle = '搜索'
         this.estateUser_data_list = res.data
-        this.estateUser_save_title = '新增物业人员'
       })
     },
     Query_estateUserDataList() {
@@ -142,9 +109,6 @@ export default {
     },
     Save_estateUserData() {
       const form = JSON.parse(JSON.stringify(this.estateUser_form_data));
-      if(form.id == undefined){
-        form.password = "123456"
-      }
       saveUser(form).then(res => {
         if (res.code == 200) {
           Success(this, '操作成功')
@@ -154,8 +118,6 @@ export default {
         this.estateUser_save_modalVisible = false
         this.Get_estateUserDataList()
       })
-
-
     },
     Table_selectChange(selectedRowKeys) {
       this.table_selectedRowKeys = selectedRowKeys;
